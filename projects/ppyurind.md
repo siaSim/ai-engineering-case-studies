@@ -1,22 +1,22 @@
-# PPYURIND — Emotion & Conflict Record Analysis
+# PPYURIND — 감정·갈등 기록 분석
 
-**Role:** AI Backend / LLM Application · **Period:** 2026.06.29–2026.07.05 (siaSim PR 기록 기준) · **Team Project**
+**역할:** AI Backend / LLM Application · **기간:** 2026.06.29–2026.07.05 (siaSim PR 기록 기준) · **Team Project**
 
-> This was a team project. This case study describes only my verified contributions.
+> 이 Case Study는 팀 프로젝트 전체가 아닌, PR·Commit·Issue 등으로 확인 가능한 개인 기여를 중심으로 작성했습니다.
 >
-> The original PPYURIND source is private. This document contains generalized explanations and links to verifiable GitHub records only.
+> PPYURIND 원본 소스는 private이며, 이 문서는 일반화한 설명과 확인 가능한 GitHub 기록 링크만 사용합니다.
 
-## Overview
+## 프로젝트 개요 (Overview)
 
 PPYURIND는 감정·갈등 기록을 분석하고, 대화 표현을 바꾸며, 일반 상담·법률 정보·안전 안내를 구분하는 AI Backend 프로젝트입니다. 저는 Azure OpenAI 응답 계약 확장, 개인정보 보호, Safety Policy, RAG routing과 법률 정보 범위, 라벨·저장 신뢰성 개선을 담당했습니다.
 
-> **Image placeholder — Overview / Team Service UI**
+> **이미지 placeholder — 프로젝트 개요 / 팀 서비스 UI**
 >
 > 기존 프로젝트 캡처가 준비되면 이 위치에 대표 화면을 추가합니다. 화면은 팀 UI에서 Backend/AI 결과가 제공되는 방식을 보여주는 용도입니다.
 >
-> *Caption: Service UI — team implementation. The case study focuses on my verified AI/Backend contributions behind this flow.*
+> *캡션: 서비스 UI — 팀 구현. 이 Case Study는 해당 흐름을 뒷받침하는 확인 가능한 AI/Backend 기여에 초점을 둡니다.*
 
-## Problem & Goal
+## 문제와 목표 (Problem & Goal)
 
 감정 기록 서비스의 입력은 개인식별정보와 민감한 관계 맥락을 포함할 수 있고, 하나의 채팅 흐름 안에서도 일반 관계 고민·법률 정보·즉시 안전 위험이 섞일 수 있습니다. 자유 형식 LLM 응답만으로 처리하면 개인정보가 분석·저장 경계를 넘거나, 법률 판단과 안전 안내가 잘못된 순서로 제공될 위험이 있었습니다.
 
@@ -29,7 +29,7 @@ PPYURIND는 감정·갈등 기록을 분석하고, 대화 표현을 바꾸며, �
 - 긴급 상황은 법률 설명보다 안전 안내가 우선되도록 정책화
 - 기존 프론트·DB 계약을 깨지 않으면서 라벨, 저장, 테스트 정합성 개선
 
-## Architecture
+## 시스템 구조 (Architecture)
 
 현재 코드와 PR에서 확인되는 Backend 논리 구조는 다음과 같습니다.
 
@@ -43,11 +43,11 @@ PPYURIND는 감정·갈등 기록을 분석하고, 대화 표현을 바꾸며, �
 
 > **Architecture placeholder**
 >
-> Architecture diagram will be added after project architecture material is provided.
+> 프로젝트 Architecture 자료가 제공된 후 Architecture diagram을 추가할 예정입니다.
 
-## My Contribution
+## 핵심 기여 (My Contribution)
 
-### 1. Multimodal Input & Structured LLM Analysis
+### 1. 멀티모달 입력 및 Structured LLM 분석 (Multimodal Input & Structured LLM Analysis)
 
 text / voice / image 입력을 같은 분석 경계로 연결하기 위해 인증된 Media API와 입력 타입 계약을 추가했습니다. 음성은 브라우저 realtime STT용 short-lived Azure Speech token을 발급하고, 업로드 오디오에는 브라우저 흐름과 분리된 STT fallback/test endpoint를 두었습니다. 여기서 fallback은 별도 입력 경로라는 의미이며, Azure 장애 시 대체 인식기로 전환하는 fallback은 아닙니다. 이미지는 Azure Vision OCR과 Blob upload를 거쳐 `masked_text`를 반환하도록 구성했습니다. [PR #16](https://github.com/AIStreetFighter/ppyurind-backend/pull/16) · [Commit e1862bf](https://github.com/AIStreetFighter/ppyurind-backend/commit/e1862bf7b32bf370b96017d6d3c3ab63e43e6085)
 
@@ -61,7 +61,7 @@ Tone Conversion에서는 Azure 응답과 backend mock fallback을 `source`로 �
 
 초기 Azure 기반 감정 분석과 기본 Tone Conversion 구현 자체는 팀원의 PR에서 시작된 범위이며, 이 문서에서는 제가 작성한 후속 계약 확장과 fallback 정비만 개인 기여로 설명합니다.
 
-### 2. PII Protection & Safety Policy
+### 2. PII 보호 및 Safety Policy (PII Protection & Safety Policy)
 
 Azure AI Language PII Detection을 공통 masking 경로에 연결하고, Azure 설정이 없거나 실패하면 기존 정규식 fallback을 사용하도록 구성했습니다. 동기 Azure 호출을 async wrapper로 감싸 기록·감정·미디어·커뮤니티·직접 AI 분석 경로에서 동일한 정책을 적용했습니다. [PR #28](https://github.com/AIStreetFighter/ppyurind-backend/pull/28)
 
@@ -69,26 +69,26 @@ Azure AI Language PII Detection을 공통 masking 경로에 연결하고, Azure 
 
 Content Safety의 초기 분석·저장 통합은 팀 구현이었고, 저는 이후 Chat routing에서 Content Safety 결과와 실제 위험 표현을 결합하는 안전 분기와 테스트를 보강했습니다. [PR #31](https://github.com/AIStreetFighter/ppyurind-backend/pull/31)
 
-### 3. RAG Chat Routing & Legal Information Boundaries
+### 3. RAG Chat Routing 및 법률 정보 범위 (RAG Chat Routing & Legal Information Boundaries)
 
 일반 관계 고민에도 법률 Search가 연결될 수 있던 경계를 현재 질문과 최근 사용자 history의 법률성 맥락을 기준으로 분리했습니다. 법률성일 때만 Azure Search data source를 사용하고, 즉시 위험이면 RAG보다 Safety Card를 우선하도록 했습니다. 부정문, 인용 문맥, 과거 피해 진술과 실제 현재 위험 표현을 구분하는 테스트도 추가했습니다. [PR #31](https://github.com/AIStreetFighter/ppyurind-backend/pull/31)
 
 RAG 근거가 상대적으로 약한 불륜·도박·접근금지 같은 주제는 승소 가능성이나 신청 요건을 단정하지 않고, 날짜별 사실관계·적법한 기록 정리·전문가 상담 권장 수준으로 제한했습니다. 양육·재산·가사소송 등 주제별 guidance를 분리해 같은 포괄 문구를 반복하지 않도록 했습니다. [PR #32](https://github.com/AIStreetFighter/ppyurind-backend/pull/32)
 
-### 4. Taxonomy & Backend Reliability
+### 4. Taxonomy 및 Backend 신뢰성 (Taxonomy & Backend Reliability)
 
 감정·갈등 주제·숨은 욕구·관계 패턴·Safety·RAG 신뢰도·AI Tone 등의 라벨을 공통 taxonomy로 모으고, helper를 Schema·Prompt·Test에서 재사용할 수 있게 했습니다. 기존 `realistic` 입력을 호환하면서 canonical label은 `honest`로 정규화하고, `label_schema_version`을 optional metadata로 관리했습니다. [PR #27](https://github.com/AIStreetFighter/ppyurind-backend/pull/27)
 
 분석 저장에서는 빈 입력을 거절하고, 동일 사용자·최근 시간 범위·유사도 기준으로 중복 기록을 update/create로 구분했습니다. 리포트 기간의 종료일 포함 문제와 기록 시각 갱신도 보완했습니다. [PR #22](https://github.com/AIStreetFighter/ppyurind-backend/pull/22) · [PR #24](https://github.com/AIStreetFighter/ppyurind-backend/pull/24) · [PR #33](https://github.com/AIStreetFighter/ppyurind-backend/pull/33)
 
-## Technical Decisions
+## 기술적 의사결정 (Technical Decisions)
 
 - **계약 우선:** LLM 출력은 Pydantic 기반 구조와 정규화 단계를 거친 뒤 API·저장 모델로 전달
 - **보호 경계 우선:** 분석보다 먼저 PII masking을 적용하고, PII masking·LLM 분석·Tone Conversion은 명시된 fallback을 사용하되 STT/OCR Azure 실패는 502로 명시
 - **라우팅 보수성:** 일반 상담에 법률 RAG를 자동 연결하지 않고, 법률·안전 맥락을 별도 판별
 - **호환성 유지:** 기존 필수 필드와 DB 제약을 보존하면서 `meta`, `safety`, `source`, `save_action` 같은 optional/확장 필드 사용
 
-## Service Flow
+## 서비스 동작 흐름 (Service Flow)
 
 아래 화면은 팀 UI에서 제 Backend/AI 결과가 사용자에게 나타나는 형태를 보여주는 용도로만 사용합니다. Frontend 전체 구현을 제 기여로 주장하지 않습니다.
 
@@ -96,21 +96,21 @@ RAG 근거가 상대적으로 약한 불륜·도박·접근금지 같은 주제�
 >
 > 감정 기록 입력과 사실·해석·감정·균형 관점 결과가 함께 보이는 실제 캡처를 추후 추가합니다.
 >
-> *Caption: Service UI — team implementation. The case study focuses on my verified AI/Backend contributions behind this flow.*
+> *캡션: 서비스 UI — 팀 구현. 이 Case Study는 해당 흐름을 뒷받침하는 확인 가능한 AI/Backend 기여에 초점을 둡니다.*
 
 > **Image placeholder — Voice STT or OCR Multimodal Input**
 >
 > 음성 STT 또는 이미지 OCR 결과가 분석 입력으로 이어지는 실제 캡처를 추후 추가합니다. 화면은 팀 UI에서 Media API와 privacy-safe analysis input이 제공되는 형태를 보여주는 용도입니다.
 >
-> *Caption: Service UI — team implementation. The case study focuses on my verified AI/Backend contributions behind this flow.*
+> *캡션: 서비스 UI — 팀 구현. 이 Case Study는 해당 흐름을 뒷받침하는 확인 가능한 AI/Backend 기여에 초점을 둡니다.*
 
 > **Image placeholder — RAG Chat / Safety Routing**
 >
 > 일반 상담, 법률 정보, 안전 안내가 구분되어 표시되는 실제 캡처를 추후 추가합니다.
 >
-> *Caption: Service UI — team implementation. The case study focuses on my verified AI/Backend contributions behind this flow.*
+> *캡션: 서비스 UI — 팀 구현. 이 Case Study는 해당 흐름을 뒷받침하는 확인 가능한 AI/Backend 기여에 초점을 둡니다.*
 
-## Reliability & Safety
+## 신뢰성 및 안전 설계 (Reliability & Safety)
 
 - Azure PII Detection 실패·미설정 시 regex fallback으로 전환하고, 내부 오류 상세를 응답·로그에 그대로 노출하지 않음
 - Content Safety와 텍스트 위험 신호를 함께 사용하되 단순 법률 키워드만으로 emergency를 판정하지 않음
@@ -118,9 +118,9 @@ RAG 근거가 상대적으로 약한 불륜·도박·접근금지 같은 주제�
 - 법률 RAG는 법률성 맥락에만 연결하고, 약한 근거 주제는 결과 예측이 아닌 상담 준비로 제한
 - Label과 저장 결과를 정규화해 알 수 없는 값·중복 입력·기간 경계 오류를 안전하게 처리
 
-## Result & Validation
+## 검증 결과 (Result & Validation)
 
-### Software Tests
+### 소프트웨어 테스트 (Software Tests)
 
 PR과 Commit에서 확인 가능한 Backend 검증 결과는 다음과 같습니다.
 
@@ -132,11 +132,11 @@ PR과 Commit에서 확인 가능한 Backend 검증 결과는 다음과 같습니
 
 PR #28, #30, #31, #32에는 관련 테스트 파일과 검증 시나리오가 추가되어 있지만, 공개 PR 기록에서 일관된 전체 통과 수치가 확인되지 않는 항목은 숫자로 확대하지 않았습니다. PR #30 자체도 일부 검증 항목을 미완료로 표시하므로 완료된 LLM 평가로 표현하지 않습니다.
 
-### LLM Quality Evaluation Boundary
+### LLM 품질 평가 범위 (LLM Quality Evaluation Boundary)
 
 Repository에서 확인되는 것은 schema·routing·fallback·policy에 대한 소프트웨어 테스트입니다. 정확도, Recall, F1, PII masking 정확도, 사용자 수, latency 또는 별도 평가셋 기반 품질 향상 수치는 확인되지 않아 주장하지 않습니다.
 
-## Evidence
+## 기여 근거 (Evidence)
 
 대표 근거는 아래 PR에 연결했습니다. 전체 근거 장부와 개인/팀 경계는 [PPYURIND Evidence](../evidence/ppyurind.md)에서 확인할 수 있습니다.
 
@@ -150,7 +150,7 @@ Repository에서 확인되는 것은 schema·routing·fallback·policy에 대한
 
 Private Repository 링크는 외부 채용 담당자에게 보이지 않을 수 있습니다. 원본 소스, PR diff, 내부 Prompt 전문, API 계약 전문, Secret, Azure Resource 정보, RAG Corpus는 이 Repository에 복사하지 않습니다.
 
-## Lessons Learned
+## 배운 점 (Lessons Learned)
 
 - LLM 기능은 모델 호출보다 응답 계약·정규화·fallback을 먼저 설계해야 기존 서비스와 안전하게 연결됩니다.
 - PII, Content Safety, 법률 RAG는 하나의 “안전 기능”이 아니라 서로 다른 경계로 분리해 검증해야 합니다.
