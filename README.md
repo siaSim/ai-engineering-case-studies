@@ -4,58 +4,54 @@ LLM Agent와 RAG를 Backend 시스템에 연결하고, Structured Output·Proven
 
 ## 핵심 기술 영역 (Focus Areas)
 
-- LLM Application / Agent orchestration
-- RAG Backend 연동 및 retrieval contract
-- Context Interpretation 및 Intent-based Tool Routing
-- Azure OpenAI 및 Structured Output
-- Safety, PII 보호 및 Prompt Injection 방어
-- FastAPI Backend, 테스트, CI 및 배포 워크플로우
+- LLM Agent, Context Interpretation, AgentPlan, Intent-based Tool Router
+- RAG Backend, Azure OpenAI, Azure AI Search, Structured Output
+- Orchestration, Provenance / Version propagation, Reliability / Safety, fail-closed 정책
+- PII Protection, Content Safety, AI Backend, 테스트·CI
+- Computer Vision 결과를 검사 서비스·저장·리포트·배포 흐름에 연결하는 AI Service Integration
 
 ## 주요 프로젝트 (Selected Projects)
 
 ### 1. ForeShield — 기후재난 인텔리전스
 
-**역할:** LLM Agent / RAG / Backend · **기간:** 진행 중 · **Team Project**
+**역할:** LLM Agent / RAG / Backend · **기간:** 2026.07 – 진행 중 · **Team Project**
 
-자연어 요청이 잘못된 Tool 실행으로 이어질 가능성을 줄이기 위해 Context Interpretation, AgentPlan, 필수 입력 검증을 포함한 Contract-based Agent Engine과 Intent-based Tool Router를 구현했습니다.
+- 모호한 자연어 요청이 잘못된 Tool 실행으로 이어질 가능성을 줄이기 위해 Context Interpretation → AgentPlan → Intent-based Tool Router 계약을 구현했습니다.
+- Azure OpenAI와 RAG 결과를 Structured Output, Orchestration, Provenance / Version propagation으로 연결하고 fail-closed·Prompt Injection 방어·Token diagnostics·회귀 테스트를 적용했습니다.
 
-- Azure OpenAI 응답과 RAG 결과를 Structured Output, Provenance/Version propagation, fail-closed 정책으로 연결
-- Tool orchestration 과정에서 결과 상태와 버전 정보를 보존하고, Token diagnostics와 회귀 테스트를 추가
-- [ForeShield Case Study](projects/foreshield.md) · [검증된 근거](evidence/foreshield.md)
+[ForeShield Case Study](projects/foreshield.md) · [검증된 근거](evidence/foreshield.md)
 
 ### 2. PPYURIND — 감정·갈등 기록 분석
 
-**역할:** Backend / Azure AI / RAG / Safety & PII · **기간:** Microsoft AI School 10기 2차 프로젝트 · **Team Project**
+**역할:** AI Backend / LLM Application · **기간:** 2026.06.29–2026.07.05 (siaSim PR 기록 기준) · **Team Project**
 
-감정·갈등 기록을 구조화하고 안전하게 분석하기 위해 Azure OpenAI Structured Output, Emotion Analysis, Tone Conversion을 Backend 응답 계약에 연결했습니다.
+- text / voice / image 입력을 STT·OCR과 PII Protection을 거쳐 Structured LLM Analysis로 연결하고, Azure AI 기반 Emotion Analysis·Tone Conversion 응답 계약을 확장했습니다.
+- Safety Policy·Content Safety를 적용하고, 일반 상담과 Legal RAG를 분리하는 RAG Chat Routing 및 법률 정보 범위를 구현했습니다.
 
-- Azure AI Language PII Masking과 Safety Policy를 적용해 민감 정보와 위험 상황을 별도 처리
-- 일반 대화와 Legal RAG 요청을 분리하고, Content Safety와 법률 정보 범위를 고려한 Chat Routing을 구현
-- [PPYURIND Case Study](projects/ppyurind.md) · [검증된 근거](evidence/ppyurind.md)
+[PPYURIND Case Study](projects/ppyurind.md) · [검증된 근거](evidence/ppyurind.md)
 
 ### 3. CellGuard AI — 배터리 검사 서비스
 
-**역할:** AI Integration / Inspection Report / Deployment Workflow · **기간:** Microsoft AI School 10기 1차 프로젝트 · **Team Project**
+**역할:** Team Lead / AI Service Integration / Computer Vision Application · **기간:** 2026.05 · **Team Project**
 
-배터리 외관·CT 검사 결과를 서비스 화면과 리포트 흐름으로 연결하기 위해 Custom Vision 및 CT/DeepLab 관련 연동 코드를 작성했습니다.
+- Azure Custom Vision과 CT / DeepLab inference 결과를 검사 애플리케이션에 통합했습니다.
+- 검사 결과 저장·이력 필터·상세 리포트 흐름을 구현하고, GitHub Actions + Azure App Service 기반 Streamlit 프로토타입 배포·시연 흐름을 구성했습니다.
 
-- 검사 결과 저장과 Report UI를 구현해 검사 결과를 조회 가능한 형태로 연결
-- Azure App Service 배포를 위한 GitHub Actions Workflow를 구성
-- [CellGuard AI Case Study](projects/cellguard-ai.md) · [검증된 근거](evidence/cellguard-ai.md)
+[CellGuard AI Case Study](projects/cellguard-ai.md) · [검증된 근거](evidence/cellguard-ai.md)
 
 ## 기술 스택 (Tech Stack)
 
-**LLM / AI Application**  
-Azure OpenAI, Agent, RAG, Structured Output, Azure AI Search, Azure AI Language, Content Safety
+**LLM / AI Application**
+Azure OpenAI, AgentPlan, Context Interpretation, Intent-based Tool Router, RAG, Structured Output, Azure AI Search, Azure AI Language, Content Safety
 
 **Backend / 신뢰성**
-Python, FastAPI, Pydantic, error handling, fail-closed policies, provenance/version propagation, 자동화 테스트
+Python, FastAPI, Pydantic, Orchestration, provenance / version propagation, fail-closed policies, 자동화 테스트, CI
 
-**ML / Computer Vision**  
-PyTorch, DeepLab, Azure Custom Vision
+**Computer Vision / Service Integration**
+Azure Custom Vision, DeepLab, PyTorch
 
-**개발 환경 (Engineering)**
-GitHub Actions, Azure App Service, CI
+**개발·배포 환경 (Engineering & Delivery)**
+GitHub Actions, Azure App Service
 
 ## 근거 및 공개 범위 (Evidence & Scope)
 

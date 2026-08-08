@@ -71,7 +71,7 @@ Azure App Service 배포를 위해 GitHub Actions workflow에 Python 환경 구�
 
 ## 서비스 동작 흐름 (Service Flow)
 
-아래 placeholder는 팀 UI에서 Computer Vision 결과가 사용자에게 나타나는 위치를 설명하기 위한 것입니다. Frontend 전체 구현을 개인 기여로 주장하지 않습니다.
+아래 화면은 팀 UI에서 Computer Vision 결과가 사용자에게 나타나는 형태를 보여줍니다. Frontend 전체 구현을 개인 기여로 주장하지 않습니다.
 
 ![CellGuard AI CT 검사 화면](../assets/cellguard/ct-inspection.png)
 
