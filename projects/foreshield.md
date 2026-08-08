@@ -69,6 +69,50 @@ RAG와 Context 안의 문장은 시스템 지시가 아닌 데이터로 처리�
 - **결과 보존:** 검색 실패를 단순 NO_DATA로 축약하지 않고 상태·출처·버전을 함께 전달했습니다.
 - **응답 통제:** JSON Schema, allowlist, Prompt 경계를 조합해 Model 출력과 Tool 실행을 각각 검증했습니다.
 
+## 트러블슈팅 (Troubleshooting)
+
+### 1. 모호한 Context가 Tool 실행으로 이어질 가능성
+
+**Problem**
+지역·재난 유형·lead·time range가 부족하거나 모호한 자연어 요청이 바로 Tool 실행으로 이어질 가능성이 있었습니다.
+
+**Root Cause / Decision**
+재난 정보에서 누락된 값을 임의 fallback으로 채우면 잘못된 검색이나 실행으로 이어질 수 있으므로, Model 호출 전에 입력 충족 여부를 판별해야 했습니다.
+
+**Resolution**
+Context Interpretation 결과를 AgentPlan으로 변환하고, 필수 입력 검증·clarification·Intent-based Tool Router를 연결했습니다. 확인할 수 없는 요청은 임의 실행 대신 fail-closed 경로로 종료하도록 했습니다. PR #187 / #194 / #221 (Private)
+
+**Validation / Impact**
+Intent-based Tool Router 집중 테스트 21 passed를 포함한 기존 Router·AgentPlan 테스트로 실행 정책을 회귀 검증했습니다. 모호한 입력에서 임의 Tool 실행을 허용하지 않는 경계를 고정한 사례입니다.
+
+### 2. Provider 결과를 합치는 과정에서 상태·근거가 유실될 가능성
+
+**Problem**
+여러 Tool/RAG 결과를 orchestration하는 과정에서 `ERROR`, `NO_DATA`, `PARTIAL`, `STALE` 상태나 version·provenance가 최종 답변에서 사라질 수 있었습니다.
+
+**Root Cause / Decision**
+결과를 단순 텍스트로 합치면 부분 결과와 검색 근거의 최신성·출처를 구분하기 어려워, 최종 응답까지 상태와 Metadata를 보존해야 했습니다.
+
+**Resolution**
+`ToolResultLedger`를 두고 source type, data/model/index version, reference time, warning/error 상태를 Agent Event와 최종 Metadata까지 전달했습니다. PR #245 (Private)
+
+**Validation / Impact**
+PR #245의 Agent/SSE 관련 테스트와 orchestration·provenance 회귀 검증으로 상태·근거 전달 경계를 확인했습니다. 부분 결과를 성공 응답처럼 축약하지 않는 판단 기준을 유지할 수 있었습니다.
+
+### 3. RAG/Context 안의 지시문이 시스템 명령처럼 해석될 위험
+
+**Problem**
+RAG 문서나 Conversation Context에 포함된 embedded instruction이 Agent 행동에 영향을 줄 가능성이 있었습니다.
+
+**Root Cause / Decision**
+검색 결과와 사용자·대화 Context는 실행 지시가 아니라 외부 데이터이므로, Prompt 안에서 시스템 정책과 분리해야 했습니다.
+
+**Resolution**
+Tool/RAG/Context 내용을 instruction이 아닌 data로 취급하도록 Prompt boundary를 강화하고, 허용된 실행 정책과 분리했습니다. PR #230 (Private)
+
+**Validation / Impact**
+Prompt Injection 방어 회귀 테스트를 PR #230에서 추가해 외부 텍스트가 실행 지시로 승격되지 않는 경계를 검증했습니다. 관련 안전 정책을 반복 검증 가능한 형태로 고정했습니다.
+
 ## 서비스 동작 흐름 (Service Flow)
 
 아래 화면은 현재 검증 가능한 Agent/RAG/Backend 기능이 팀 UI에서 제공되는 방식을 보여주는 용도입니다.

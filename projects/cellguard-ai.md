@@ -75,6 +75,36 @@ Azure App Service 배포를 위해 GitHub Actions workflow에 Python 환경 구�
 - **Azure 파일시스템 고려:** 보고서 저장 경로를 별도 storage helper로 분리하고 Azure App Service의 `/home` 기반 저장 경계를 고려했습니다.
 - **보수적 성과 표현:** Commit에서 확인되는 연동·저장·UI·workflow만 기술하고 모델 성능 수치나 학습 성과는 포함하지 않았습니다.
 
+## 트러블슈팅 (Troubleshooting)
+
+### 1. 로컬/Azure 저장 경로 차이로 검사 이력이 저장되지 않을 가능성
+
+**Problem**
+로컬 실행 환경의 상대 경로와 Azure App Service의 파일 시스템 경계가 달라지면 CSV와 report artifact 저장 흐름이 깨질 수 있었습니다.
+
+**Root Cause / Decision**
+저장 경로를 실행 환경과 무관한 하나의 상대 경로로 가정하면, App Service에서 사용하는 writable path와 로컬 경로가 달라질 수 있었습니다.
+
+**Resolution**
+보고서 저장 helper를 분리하고 Azure App Service `/home` 저장 경계를 고려한 경로를 사용하도록 정리했습니다. 검사 결과·원본 이미지·overlay 경로를 같은 report 저장 흐름에 연결했습니다. Commit cdbcdf9 (Public) · Commit 649c9b3 / 1ef4a9a (Public)
+
+**Validation / Impact**
+공개 코드에서 Azure-compatible report path와 결과·리포트 조회 경계를 확인할 수 있습니다. 운영 DB 안정성이나 실제 서비스 가동률을 검증한 것으로 확대하지 않고, 환경별 저장 오류 경계를 명확히 한 사례로 기록합니다.
+
+### 2. GitHub Actions 배포 workflow가 중복되어 최종 경로가 불명확한 문제
+
+**Problem**
+여러 Azure App Service deployment workflow가 함께 존재하면 어떤 workflow가 최종 배포 경로인지 판단하기 어려웠습니다.
+
+**Root Cause / Decision**
+기존 workflow 파일이 서로 다른 이름으로 남아 있어 배포 설정을 한 곳에서 확인하기 어려웠습니다.
+
+**Resolution**
+중복 workflow 파일을 제거하고 `main_battery-main.yml` 중심으로 Azure App Service 배포 경로를 정리했습니다. Commit 486affed (Public)
+
+**Validation / Impact**
+공개 Commit에서 중복 workflow 파일 제거와 최종 workflow 경로를 확인했습니다. 이는 배포 경로를 명확히 한 정리 작업이며, Production 배포 성공·SLA·장기 운영을 의미하지 않습니다.
+
 ## 서비스 동작 흐름 (Service Flow)
 
 아래 화면은 팀 UI에서 Computer Vision 결과가 사용자에게 나타나는 형태를 보여줍니다. Frontend 전체 구현을 개인 기여로 주장하지 않습니다.

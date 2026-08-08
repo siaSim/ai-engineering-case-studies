@@ -96,6 +96,50 @@ RAG 근거가 상대적으로 약한 불륜·도박·접근금지 같은 주제�
 - **라우팅 보수성:** 일반 상담에 법률 RAG를 자동 연결하지 않고, 법률·안전 맥락을 별도 판별
 - **호환성 유지:** 기존 필수 필드와 DB 제약을 보존하면서 `meta`, `safety`, `source`, `save_action` 같은 optional/확장 필드 사용
 
+## 트러블슈팅 (Troubleshooting)
+
+### 1. PII 마스킹으로 관계 맥락이 손실될 가능성
+
+**Problem**
+배우자·남편·아내와 같은 관계어까지 개인정보로 취급해 제거하면, 갈등 분석에 필요한 맥락이 사라질 수 있었습니다.
+
+**Root Cause / Decision**
+실명·전화번호·주소 같은 직접 식별정보와 관계 분석에 필요한 일반 관계어를 같은 기준으로 마스킹하면 개인정보 보호는 강화되지만 분석 의미가 과도하게 축소됩니다. 프로젝트 결과보고서와 QA 기록에서 두 범위를 분리하는 정책을 정리했습니다.
+
+**Resolution**
+Azure AI Language PII Detection을 우선 사용하고 설정 누락·호출 실패 시 기존 regex fallback을 유지하되, 직접 식별정보는 보호하고 관계어는 보존하는 masking 경계를 적용했습니다. PR #28 (Private)
+
+**Validation / Impact**
+PR #28의 masking 테스트는 Azure 호출을 mock으로 검증했으며, PII precision/recall이나 masking accuracy 수치는 주장하지 않습니다. 개인정보 보호와 관계 맥락 보존을 함께 고려하는 정책 경계를 명확히 했습니다.
+
+### 2. Legal RAG가 일반 상담에 개입하거나 법률 자문처럼 보일 가능성
+
+**Problem**
+일반 관계 고민에 법률 Search가 연결되거나, 이혼·양육비 등의 답변이 전문가 판단처럼 보일 수 있었습니다.
+
+**Root Cause / Decision**
+현재 질문만 보거나 법률 키워드만으로 분기하면 대화 맥락을 놓치고, 근거 범위를 넘어선 단정적 답변으로 이어질 수 있었습니다.
+
+**Resolution**
+현재 질문과 최근 conversation history의 법률성 맥락을 기준으로 Legal RAG를 라우팅하고, 일반 상담과 분리했습니다. 즉시 위험 상황에서는 RAG보다 Safety Card를 우선하며, 근거가 약한 주제는 법률 자문이 아닌 정보 제공·기록 정리·전문가 상담 권장 범위로 제한했습니다. PR #31 / #32 (Private)
+
+**Validation / Impact**
+부정문·인용 문맥·현재 위험 표현을 구분하는 chat 테스트와 주제별 legal guidance 테스트를 PR #31 / #32에서 추가했습니다. 법률 정확도나 답변 품질 benchmark 수치는 주장하지 않고, 라우팅과 표현 범위의 오류 경계를 고정했습니다.
+
+### 3. 자유형 LLM 응답의 저장·파싱 정합성 문제
+
+**Problem**
+필드 누락·중복·format 깨짐이 발생하면 감정 분석 결과의 DB 저장과 API rendering이 불안정해질 수 있었습니다.
+
+**Root Cause / Decision**
+자유형 자연어 응답은 응답 구조와 label 기준이 매번 달라질 수 있어, 저장 모델과 화면이 기대하는 계약을 보장하기 어려웠습니다.
+
+**Resolution**
+Pydantic 기반 Structured Output과 정규화를 적용하고, 14개 그룹·81개 label taxonomy를 Schema·Prompt·Test에서 공통으로 사용하도록 정리했습니다. 기존 label 입력 호환성과 `label_schema_version` optional metadata도 유지했습니다. PR #27 / #30 (Private)
+
+**Validation / Impact**
+Tone Conversion·emotion response contract 테스트와 taxonomy 테스트를 기존 PR·Commit 기록으로 검증했습니다. Commit 기록상 taxonomy 테스트는 21 passed이며, LLM 품질 평가 완료나 별도 정확도 수치는 주장하지 않습니다.
+
 ## 서비스 동작 흐름 (Service Flow)
 
 아래 화면은 팀 UI에서 제 Backend/AI 결과가 사용자에게 나타나는 형태를 보여주는 용도로만 사용합니다. Frontend 전체 구현을 제 기여로 주장하지 않습니다.

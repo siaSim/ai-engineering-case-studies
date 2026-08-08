@@ -40,6 +40,7 @@
 | History filtering | 기간·라인·검사 유형·판정 결과·Battery ID 검색과 결과 정렬을 검사 이력 페이지에 연결 | [Commit 0c7a6b0](https://github.com/ms-ai-school-10th-team3/battery/commit/0c7a6b0075dcf770b9d4add665c455bf03763a45) | 본인 authored Commit + filter code 변경 |
 | Report drill-down UI | 이력 행 선택 결과를 session state에 저장하고 상세 report page로 이동 | [Commit 7eeef65](https://github.com/ms-ai-school-10th-team3/battery/commit/7eeef6592b6d5aeb0a520df5fc989bf90db7f362) | 본인 authored Commit + history/detail 연결 |
 | Azure App Service workflow | Python setup, dependency install, artifact upload, Azure login, Web App deploy 단계를 GitHub Actions에 정의 | [Commit 80dc8e9](https://github.com/ms-ai-school-10th-team3/battery/commit/80dc8e98146e6fa03c69b4c350f06e59271c0ecf) · [Commit ec75de7](https://github.com/ms-ai-school-10th-team3/battery/commit/ec75de701bb670b82efad2864f5b1633f038164b) | 본인 authored Commit + workflow YAML 변경 |
+| Deployment workflow cleanup | 중복된 deployment workflow 파일을 제거하고 `main_battery-main.yml` 중심의 배포 경로로 정리 | [Commit 486affed](https://github.com/ms-ai-school-10th-team3/battery/commit/486affed0e82c62ad25226bee6f7df1ca29ea11f) | 본인 authored public Commit + workflow 파일 2개 제거 |
 
 ## 기여 범위 및 상태 (Boundary and Status Notes)
 
