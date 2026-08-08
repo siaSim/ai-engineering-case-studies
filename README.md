@@ -27,6 +27,7 @@ LLM Agent와 RAG를 Backend 시스템에 연결하고, Structured Output·Proven
 
 - text / voice / image 입력을 STT·OCR과 PII Protection을 거쳐 Structured LLM Analysis로 연결하고, Azure AI 기반 Emotion Analysis·Tone Conversion 응답 계약을 확장했습니다.
 - Safety Policy·Content Safety를 적용하고, 일반 상담과 Legal RAG를 분리하는 RAG Chat Routing 및 법률 정보 범위를 구현했습니다.
+- Responsible AI Hard Set 60건과 General Stability Set 120건을 대상으로 Python API Eval Harness를 구성·실행하고, Stability 120/120 HTTP 200·응답 구조 안정성 100% 및 Hard Set Recall 33.3%·F1 37.5%를 측정해 개선 우선순위를 도출했습니다.
 
 [PPYURIND Case Study](projects/ppyurind.md) · [검증된 근거](evidence/ppyurind.md)
 
