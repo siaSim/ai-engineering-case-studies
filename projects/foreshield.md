@@ -1,8 +1,10 @@
 # ForeShield — Climate Disaster Intelligence
 
+**Role:** LLM Agent / RAG / Backend · **Period:** 2026.08.03–진행 중 (GitHub 기록 기준) · **Team Project**
+
 > This was a team project. This case study describes only my verified contributions.
 >
-> The original ForeShield source is private. This document contains generalized explanations and links to verifiable GitHub records only.
+> The original ForeShield source is private; this document uses generalized explanations and verifiable GitHub records only.
 
 ## Overview
 
@@ -34,7 +36,7 @@ ForeShield는 기후재난 질문에 지역·재난 유형·시간 범위와 공
 - **Provider layer:** Tool/RAG Provider와 Azure OpenAI Provider가 계약에 맞는 결과와 Structured Answer를 제공합니다.
 - **Result layer:** Orchestration과 ToolResultLedger가 상태·provenance·version을 보존해 최종 응답으로 전달합니다.
 
-이는 최종 배포 구조나 Frontend 전체 구현을 설명하는 문서가 아니라, 현재 검증 가능한 Backend 경계를 요약한 것입니다.
+아래 구성은 현재 검증 가능한 Backend 경계를 요약한 것입니다.
 
 > **Architecture placeholder**
 >
@@ -58,8 +60,6 @@ Provider 구현 전에 실행 순서와 상태를 검증할 수 있도록 AgentR
 
 기존 Agent 계약을 Azure OpenAI Response Provider와 실제 RAG Provider에 연결하고, 로컬 Mock 경로와 Azure Search 경계를 설정으로 분리했습니다. Azure 최종 응답에는 strict JSON Schema와 검증 가능한 fallback을 적용해 자유 형식 응답을 그대로 성공 처리하지 않도록 했습니다. [PR #80](https://github.com/ForeShield/backend/pull/80) · [PR #102](https://github.com/ForeShield/backend/pull/102) · [PR #234](https://github.com/ForeShield/backend/pull/234)
 
-PR에 기록된 Azure smoke test는 인증정보와 환경에 따라 별도 실행되는 범위이므로, 이 문서에서는 Production 운영 완료를 주장하지 않습니다.
-
 ### 4. Orchestration, Provenance & Safety
 
 여러 Tool/RAG 결과를 합칠 때 상태와 근거가 사라지지 않도록 ToolResultLedger와 결과 Metadata 전달을 구현했습니다. source type, data/model/index version, reference time과 ERROR·NO_DATA·PARTIAL·STALE 상태를 결과 Event와 응답에 보존했습니다.
@@ -77,7 +77,7 @@ RAG와 Context 안의 문장은 시스템 지시가 아닌 데이터로 처리�
 
 ## Service Flow
 
-최종 Architecture와 실제 서비스 화면이 준비되면 이 섹션에 추가할 예정입니다. 화면은 제가 구현한 Agent/RAG/Backend 기능이 팀 UI에서 어떻게 제공되는지 보여주는 용도로만 사용하며, Frontend 전체 구현을 제 기여로 주장하지 않습니다.
+최종 Architecture와 실제 서비스 화면이 준비되면 이 섹션에 추가할 예정입니다. 화면은 Agent/RAG/Backend 기능이 팀 UI에서 제공되는 방식을 보여주는 용도입니다.
 
 > **Image placeholder — Service Flow 1 / Agent Context**
 >
@@ -111,7 +111,7 @@ Agent 실행 기반을 한 번에 구현하지 않고 GitHub Issue와 Project로
 - Structured Output 위반과 Provider의 ERROR·NO_DATA·PARTIAL·STALE 상태를 성공으로 변환하지 않음
 - RAG/Context 안의 Embedded Prompt Instruction을 데이터로만 취급
 - Live/Training allowlist, UI Action target 검증, 승인 전 deferred 정책으로 외부 영향 차단
-- Token diagnostics에 사용자 입력·모델 출력 원문을 기록하지 않으며, 실제 Azure·PostgreSQL·Search E2E는 별도 검증
+- Token diagnostics에 사용자 입력·모델 출력 원문을 기록하지 않음
 
 ## Result & Validation
 
@@ -122,7 +122,7 @@ Agent 실행 기반을 한 번에 구현하지 않고 GitHub Issue와 Project로
 - [PR #234](https://github.com/ForeShield/backend/pull/234): Agent Provider·Context Interpretation·Azure Chat 집중 테스트 32 passed
 - [PR #245](https://github.com/ForeShield/backend/pull/245): Agent/SSE 관련 테스트 34 passed; 전체 실행의 환경 의존 실패는 별도 구분
 
-Production 성능, 사용자 수, 정확도, Latency 개선 수치는 이 기록만으로 확인되지 않으므로 주장하지 않습니다.
+운영 검증 범위는 코드·집중 테스트와 분리합니다. 실제 Azure·PostgreSQL·Azure Search 운영 E2E와 Production 상태는 별도 배포 환경에서 확인해야 합니다. 이 기록만으로 성능, 사용자 수, 정확도, Latency 개선 수치는 주장하지 않습니다.
 
 ## Evidence
 
