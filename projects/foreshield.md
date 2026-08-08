@@ -1,6 +1,6 @@
 # ForeShield — 기후재난 인텔리전스
 
-**역할:** LLM Agent / RAG / Backend · **기간:** 2026.08.03–진행 중 (GitHub 기록 기준) · **Team Project**
+**역할:** LLM Agent / RAG / Backend · **기간:** 2026.07 – 진행 중 · **Team Project**
 
 > 이 Case Study는 팀 프로젝트 전체가 아닌, PR·Commit·Issue 등으로 확인 가능한 개인 기여를 중심으로 작성했습니다.
 >
