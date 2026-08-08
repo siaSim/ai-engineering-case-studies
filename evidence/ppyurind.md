@@ -8,6 +8,21 @@
 
 - Team architecture/data-flow reference: 프로젝트 결과보고서의 팀 전체 설계 자료입니다. 전체 시스템 맥락 설명용이며 개인 구현 근거로 사용하지 않습니다.
 
+### Supplemental Evaluation Evidence
+
+아래 평가 결과는 GitHub PR·Commit 기반 소프트웨어 Evidence와 구분한 프로젝트 평가 결과입니다. 평가 원본 Eval Harness와 결과 파일은 이 공개 Repository에 포함하지 않습니다.
+
+- **Python Eval Harness**
+- **Responsible AI Hard Set:** 60건
+- **General Stability Set:** 120건
+- **총 평가 건수:** 180건
+- **General Stability Set:** 120/120 HTTP 200
+- **응답 구조 안정성:** 100%
+- **Responsible AI Hard Set 위험 Recall:** 33.3%
+- **Responsible AI Hard Set F1:** 37.5%
+
+이 결과는 이후 개선 우선순위를 도출하는 데 사용했습니다. Hard Set의 낮은 Recall/F1 결과도 관찰된 결과 그대로 기록하며, GitHub Commit으로 확인한 수치처럼 표현하지 않습니다.
+
 팀원이 작성한 초기 구현은 개인 기여와 구분했습니다. 특히 `my0614`의 PR #6·#8에는 초기 Azure OpenAI emotion analysis / Content Safety 연동이, PR #13에는 초기 Tone Conversion 구현이 포함되어 있습니다. Case Study에서는 siaSim이 작성한 후속 policy, contract, masking, routing, reliability 작업만 개인 기여로 표현합니다.
 
 ## 검증된 개인 기여 (Verified Contributions)
