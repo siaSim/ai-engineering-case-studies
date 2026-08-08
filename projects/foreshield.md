@@ -10,11 +10,9 @@
 
 ForeShield는 기후재난 질문에 지역·재난 유형·시간 범위와 공식 문서 근거를 연결해 답변하는 AI Backend 프로젝트입니다. 저는 LLM Agent 실행 기반, Context Interpretation, RAG/Provider 연결, Azure OpenAI 응답 계약, 결과 provenance와 안전 정책을 담당했습니다.
 
-> **Image placeholder — Overview / Service UI**
->
-> 실제 ForeShield 서비스 화면은 추후 제공 예정입니다.
->
-> *Caption: Service UI — team implementation. The case study focuses on my verified AI/Backend contributions behind this flow.*
+![ForeShield service overview](../assets/foreshield/overview.png)
+
+*Service UI — team implementation. The case study focuses on my verified AI/Backend contributions behind this flow. This dashboard presents the forecast state, map context, lead time, and model-evaluation panels that support the service experience.*
 
 ## Problem & Goal
 
@@ -77,19 +75,15 @@ RAG와 Context 안의 문장은 시스템 지시가 아닌 데이터로 처리�
 
 ## Service Flow
 
-최종 Architecture와 실제 서비스 화면이 준비되면 이 섹션에 추가할 예정입니다. 화면은 Agent/RAG/Backend 기능이 팀 UI에서 제공되는 방식을 보여주는 용도입니다.
+최종 Architecture는 아직 확정되지 않았습니다. 아래 화면은 Agent/RAG/Backend 기능이 팀 UI에서 제공되는 방식을 보여주는 용도입니다.
 
-> **Image placeholder — Service Flow 1 / Agent Context**
->
-> 실제 Agent 동작 화면은 추후 제공 예정입니다.
->
-> *Caption: Service UI — team implementation. The case study focuses on my verified AI/Backend contributions behind this flow.*
+![ForeShield Agent flow](../assets/foreshield/agent-flow.png)
 
-> **Image placeholder — Service Flow 2 / Tool and RAG Result**
->
-> 실제 Tool/RAG 결과와 Structured Answer 화면은 추후 제공 예정입니다.
->
-> *Caption: Service UI — team implementation. The case study focuses on my verified AI/Backend contributions behind this flow.*
+*Service UI — team implementation. The case study focuses on my verified AI/Backend contributions behind this flow. The response flow shown here is backed by Context Interpretation, Tool Routing, RAG retrieval, and Structured Output validation described in this case study.*
+
+![ForeShield RAG evidence](../assets/foreshield/rag-evidence.png)
+
+*Service UI — team implementation. The case study focuses on my verified AI/Backend contributions behind this flow. This evidence view connects the structured response to RAG retrieval and publicly named source documents; it does not represent Frontend ownership.*
 
 ## Engineering Workflow
 
