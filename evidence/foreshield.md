@@ -4,6 +4,8 @@
 
 ForeShield/backend는 private Repository입니다. 외부 독자는 연결된 PR·Issue·파일을 열지 못할 수 있습니다. private source code, 내부 Prompt, API contract, Secret, Azure Resource, 내부 Endpoint, RAG Corpus, 팀 내부 데이터는 이 문서에 복제하지 않습니다.
 
+개인 GitHub 기여 기록은 2026.08.03부터 확인되며, 이는 프로젝트 시작일과 별개의 기준입니다.
+
 ## 핵심 코드 경로 (Core Code Paths)
 
 - Agent Engine — `src/foreshield/agent/engine.py` (Private repository)
