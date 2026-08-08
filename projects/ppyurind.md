@@ -23,7 +23,8 @@ PPYURIND는 감정·갈등 기록을 분석하고, 대화 표현을 바꾸며, �
 목표와 제약은 다음과 같았습니다.
 
 - Azure OpenAI 응답을 기존 API와 호환되는 Structured Output으로 연결
-- 분석·저장·공유 전에 PII를 보호하고 Azure 장애 시 fallback 유지
+- 분석·저장·공유 전에 PII를 보호하고, PII masking·LLM 분석·Tone Conversion의 fallback 경계를 명시
+- STT/OCR은 Azure 장애 시 대체 인식기로 전환하지 않고 오류를 반환하는 별도 실패 경계를 유지
 - 법률 RAG는 법률성 맥락에만 연결하고, 근거가 약한 주제는 상담 준비 수준으로 제한
 - 긴급 상황은 법률 설명보다 안전 안내가 우선되도록 정책화
 - 기존 프론트·DB 계약을 깨지 않으면서 라벨, 저장, 테스트 정합성 개선
@@ -46,7 +47,13 @@ PPYURIND는 감정·갈등 기록을 분석하고, 대화 표현을 바꾸며, �
 
 ## My Contribution
 
-### 1. Structured LLM Analysis & Response Contracts
+### 1. Multimodal Input & Structured LLM Analysis
+
+text / voice / image 입력을 같은 분석 경계로 연결하기 위해 인증된 Media API와 입력 타입 계약을 추가했습니다. 음성은 브라우저 realtime STT용 short-lived Azure Speech token을 발급하고, 업로드 오디오에는 브라우저 흐름과 분리된 STT fallback/test endpoint를 두었습니다. 여기서 fallback은 별도 입력 경로라는 의미이며, Azure 장애 시 대체 인식기로 전환하는 fallback은 아닙니다. 이미지는 Azure Vision OCR과 Blob upload를 거쳐 `masked_text`를 반환하도록 구성했습니다. [PR #16](https://github.com/AIStreetFighter/ppyurind-backend/pull/16) · [Commit e1862bf](https://github.com/AIStreetFighter/ppyurind-backend/commit/e1862bf7b32bf370b96017d6d3c3ab63e43e6085)
+
+PR #16은 Media 결과의 `masked_text`를 반환하고, 같은 변경에서 Emotion/records analysis service가 masking된 입력을 안전성 검사·LLM 분석·저장에 사용하도록 연결했습니다. 테스트는 voice/image 입력과 masking 순서, media endpoint 인증·입력 검증을 확인합니다. 다만 STT/OCR 자체는 Azure 장애 시 다른 인식기로 fallback하지 않고 502 오류를 반환합니다.
+
+Azure Speech SDK의 업로드 STT는 실행 환경에서 worker thread가 Apple TLS backend와 충돌할 수 있어, 별도 개인 커밋에서 직접 실행하도록 수정했습니다. [Commit 6319d1e](https://github.com/AIStreetFighter/ppyurind-backend/commit/6319d1e17981d669c007282ab5f0c85faba1bae7)
 
 기존 감정 분석 응답을 단순 감정 목록에서 사실·해석·느낀 감정·균형 관점과 키워드별 sentiment로 확장했습니다. Azure OpenAI `EmotionAnalysisResult` 계약에 새 구조를 추가하고, 점수 범위와 label을 정규화해 저장 응답과 API schema가 같은 기준을 사용하도록 했습니다. [PR #30](https://github.com/AIStreetFighter/ppyurind-backend/pull/30) · [Commit 6142601](https://github.com/AIStreetFighter/ppyurind-backend/commit/614260199198a1ba957b0a472dec5a3b187d6d83)
 
@@ -77,7 +84,7 @@ RAG 근거가 상대적으로 약한 불륜·도박·접근금지 같은 주제�
 ## Technical Decisions
 
 - **계약 우선:** LLM 출력은 Pydantic 기반 구조와 정규화 단계를 거친 뒤 API·저장 모델로 전달
-- **보호 경계 우선:** 분석보다 먼저 PII masking을 적용하고, Azure 실패 시에도 명시된 fallback 경로 사용
+- **보호 경계 우선:** 분석보다 먼저 PII masking을 적용하고, PII masking·LLM 분석·Tone Conversion은 명시된 fallback을 사용하되 STT/OCR Azure 실패는 502로 명시
 - **라우팅 보수성:** 일반 상담에 법률 RAG를 자동 연결하지 않고, 법률·안전 맥락을 별도 판별
 - **호환성 유지:** 기존 필수 필드와 DB 제약을 보존하면서 `meta`, `safety`, `source`, `save_action` 같은 optional/확장 필드 사용
 
@@ -91,15 +98,15 @@ RAG 근거가 상대적으로 약한 불륜·도박·접근금지 같은 주제�
 >
 > *Caption: Service UI — team implementation. The case study focuses on my verified AI/Backend contributions behind this flow.*
 
-> **Image placeholder — RAG Chat / Safety Routing**
+> **Image placeholder — Voice STT or OCR Multimodal Input**
 >
-> 일반 상담, 법률 정보, 안전 안내가 구분되어 표시되는 실제 캡처를 추후 추가합니다.
+> 음성 STT 또는 이미지 OCR 결과가 분석 입력으로 이어지는 실제 캡처를 추후 추가합니다. 화면은 팀 UI에서 Media API와 privacy-safe analysis input이 제공되는 형태를 보여주는 용도입니다.
 >
 > *Caption: Service UI — team implementation. The case study focuses on my verified AI/Backend contributions behind this flow.*
 
-> **Image placeholder — PII Masking / Stored Analysis**
+> **Image placeholder — RAG Chat / Safety Routing**
 >
-> 개인정보가 보호된 분석·저장 결과와 사용자 노출 응답을 보여주는 실제 캡처를 추후 추가합니다.
+> 일반 상담, 법률 정보, 안전 안내가 구분되어 표시되는 실제 캡처를 추후 추가합니다.
 >
 > *Caption: Service UI — team implementation. The case study focuses on my verified AI/Backend contributions behind this flow.*
 
@@ -133,7 +140,8 @@ Repository에서 확인되는 것은 schema·routing·fallback·policy에 대한
 
 대표 근거는 아래 PR에 연결했습니다. 전체 근거 장부와 개인/팀 경계는 [PPYURIND Evidence](../evidence/ppyurind.md)에서 확인할 수 있습니다.
 
-- [PR #20 — Azure OpenAI response source and fallback](https://github.com/AIStreetFighter/ppyurind-backend/pull/20)
+- [PR #16 — Authenticated media OCR and realtime STT token flow](https://github.com/AIStreetFighter/ppyurind-backend/pull/16)
+- [PR #20 / #30 — Structured LLM response contracts](https://github.com/AIStreetFighter/ppyurind-backend/pull/20) · [#30](https://github.com/AIStreetFighter/ppyurind-backend/pull/30)
 - [PR #26 — AI Safety Policy Layer](https://github.com/AIStreetFighter/ppyurind-backend/pull/26)
 - [PR #27 — Label taxonomy](https://github.com/AIStreetFighter/ppyurind-backend/pull/27)
 - [PR #28 — Azure AI Language PII masking](https://github.com/AIStreetFighter/ppyurind-backend/pull/28)
