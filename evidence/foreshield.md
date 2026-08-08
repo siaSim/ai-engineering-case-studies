@@ -25,8 +25,8 @@ ForeShield/backend is a private Repository. External readers may not be able to 
 | Feature | Contribution | PR/Commit | Evidence Level |
 |---|---|---|---|
 | AgentRunRequest fixtures | live/training Context Fixture와 검증 helper 구현 | [Issue #15](https://github.com/ForeShield/backend/issues/15) · [PR #36](https://github.com/ForeShield/backend/pull/36) | Direct Issue + authored PR |
-| Contract-based Agent Engine | Mock Tool/RAG Provider, AgentEvent streaming, terminal event와 상태 정책 구현 | [Issues #16–#19](https://github.com/ForeShield/backend/issues/19) · [PR #36](https://github.com/ForeShield/backend/pull/36) | Direct authored PR + tests |
-| Conversation/SSE runtime boundary | AgentEngine을 Conversation/SSE 흐름에 연결하고 Tool execution·RAG provenance 정합성 보완 | [PR #54](https://github.com/ForeShield/backend/pull/54) · [Issues #49–#53](https://github.com/ForeShield/backend/issues/53) | Direct authored PR; shared runtime boundary |
+| Contract-based Agent Engine | Mock Tool/RAG Provider, AgentEvent streaming, terminal event와 상태 정책 구현 | [Issue #16](https://github.com/ForeShield/backend/issues/16) · [Issue #17](https://github.com/ForeShield/backend/issues/17) · [Issue #18](https://github.com/ForeShield/backend/issues/18) · [Issue #19](https://github.com/ForeShield/backend/issues/19) · [PR #36](https://github.com/ForeShield/backend/pull/36) | Direct authored PR + tests |
+| Conversation/SSE runtime boundary | AgentEngine을 Conversation/SSE 흐름에 연결하고 Tool execution·RAG provenance 정합성 보완 | [PR #54](https://github.com/ForeShield/backend/pull/54) · [Issue #49](https://github.com/ForeShield/backend/issues/49) · [Issue #50](https://github.com/ForeShield/backend/issues/50) · [Issue #51](https://github.com/ForeShield/backend/issues/51) · [Issue #52](https://github.com/ForeShield/backend/issues/52) · [Issue #53](https://github.com/ForeShield/backend/issues/53) | Direct authored PR; shared runtime boundary |
 | Configurable Real RAG Provider | Mock/Real Provider와 local/Azure Search 경계를 연결하고 지역 필터·provenance 유지 | [Issue #71](https://github.com/ForeShield/backend/issues/71) · [PR #80](https://github.com/ForeShield/backend/pull/80) | Direct authored PR; Azure smoke separate |
 | Azure OpenAI Response Provider | Azure Agent 응답 Provider와 기존 Agent 계약 연결 | [PR #102](https://github.com/ForeShield/backend/pull/102) | Direct authored PR |
 | Azure token usage propagation | Azure completion usage를 Agent 경로로 전달 | [PR #120](https://github.com/ForeShield/backend/pull/120) | Direct authored PR |
@@ -43,7 +43,7 @@ ForeShield/backend is a private Repository. External readers may not be able to 
 | Live/Training Tool policy | 모드별 Tool allowlist, 외부 영향 차단, 승인 전 Training Action 보류 | [Issue #147](https://github.com/ForeShield/backend/issues/147) · [PR #252](https://github.com/ForeShield/backend/pull/252) | Direct authored PR + tests |
 | UI execution target validation | open_chart 실행 목표와 실제 화면 상태 불일치 시 fail-closed | [Issue #231](https://github.com/ForeShield/backend/issues/231) · [PR #255](https://github.com/ForeShield/backend/pull/255) | Direct authored PR; frontend contract shared |
 | CI maintenance | Agent answer policy test import 정리로 Ruff CI 오류 수정 | [Issue #148](https://github.com/ForeShield/backend/issues/148) · [PR #258](https://github.com/ForeShield/backend/pull/258) | Direct authored PR; no logic change |
-| GitHub Project task decomposition | Agent 기반 작업을 Fixture → Mock Tool → Mock RAG → AgentEngine → Test Issue로 분해하고 PR과 연결 | [ForeShield Project #1](https://github.com/orgs/ForeShield/projects/1) · [Issues #15–#19](https://github.com/ForeShield/backend/issues/19) · [PR #36](https://github.com/ForeShield/backend/pull/36) | Project view + authored Issues + linked PR |
+| GitHub Project task decomposition | Agent 기반 작업을 Fixture → Mock Tool → Mock RAG → AgentEngine → Test Issue로 분해하고 PR과 연결 | [ForeShield Project #1](https://github.com/orgs/ForeShield/projects/1) · [Issue #15](https://github.com/ForeShield/backend/issues/15) · [Issue #16](https://github.com/ForeShield/backend/issues/16) · [Issue #17](https://github.com/ForeShield/backend/issues/17) · [Issue #18](https://github.com/ForeShield/backend/issues/18) · [Issue #19](https://github.com/ForeShield/backend/issues/19) · [PR #36](https://github.com/ForeShield/backend/pull/36) | Project view + authored Issues + linked PR |
 
 ## Project and Issue Management Evidence
 
@@ -80,4 +80,4 @@ RAG 관련 Project Item #20–#23은 Project 화면에서 확인되지만 siaSim
 
 ## Commit History
 
-전체 Commit은 [ForeShield/backend의 author:siaSim Commit 검색](https://github.com/search?q=repo%3AForeShield%2Fbackend+author%3AsiaSim&type=commits)에서 확인할 수 있습니다.
+전체 Commit은 ForeShield/backend의 author:siaSim 활동 기록에서 확인할 수 있습니다.
