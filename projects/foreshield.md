@@ -91,6 +91,10 @@ Agent 실행 기반을 한 번에 구현하지 않고 GitHub Issue와 Project로
 
 [ForeShield GitHub Project](https://github.com/orgs/ForeShield/projects/1)에서 다음 작업이 siaSim 담당, LLM/RAG 영역, P1, Feature 또는 Chore, Done 상태로 표시되고 PR #36과 연결되어 있습니다.
 
+![ForeShield GitHub Project workflow](../assets/foreshield/github-project-workflow.png)
+
+*GitHub Projects — ForeShield LLM/RAG work items. Agent/RAG 작업을 Issue 단위로 분해하고 Assignee·Priority·Status·Linked PR을 연결해 관리한 팀 개발 보드입니다. 화면은 siaSim 담당 작업을 중심으로 보여주며, Project Item 생성자를 개인 기여로 주장하지 않습니다.*
+
 1. [Issue #15](https://github.com/ForeShield/backend/issues/15): AgentRunRequest Context Fixture
 2. [Issue #16](https://github.com/ForeShield/backend/issues/16): 계약 기반 Mock ToolProvider
 3. [Issue #17](https://github.com/ForeShield/backend/issues/17): 계약 기반 Mock RagProvider
