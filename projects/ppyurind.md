@@ -29,6 +29,12 @@ PPYURIND는 감정·갈등 기록을 분석하고, 대화 표현을 바꾸며, �
 
 ## 시스템 구조 (Architecture)
 
+아래 다이어그램은 PPYURIND 팀 프로젝트의 전체 시스템 구성을 보여주는 **Team-level System Architecture**입니다.
+
+![PPYURIND System Architecture](../assets/ppyurind/system-architecture.png)
+
+*Team-level architecture — React Web App, Backend API, PostgreSQL, Blob Storage와 Azure AI 서비스 간의 전체 연결 관계를 보여주는 팀 설계 자료입니다. 다이어그램 전체를 개인 구현 범위로 주장하지 않습니다.*
+
 현재 코드와 PR에서 확인되는 Backend 논리 구조는 다음과 같습니다.
 
 - **Input protection:** 기록·분석·미디어·커뮤니티 입력을 공통 PII masking 경로로 통과시킵니다.
@@ -39,9 +45,15 @@ PPYURIND는 감정·갈등 기록을 분석하고, 대화 표현을 바꾸며, �
 
 이는 최종 배포 Architecture나 Frontend 전체 구현을 확정하는 설명이 아니라, 현재 개인 기여를 검증할 수 있는 Backend 경계의 요약입니다.
 
-> **Architecture placeholder**
->
-> 프로젝트 Architecture 자료가 제공된 후 Architecture diagram을 추가할 예정입니다.
+### AI / Input Data Flow
+
+텍스트·음성·채팅 캡처 입력이 하나의 분석 경계로 연결되는 팀 설계 흐름입니다.
+
+![PPYURIND AI Data Flow](../assets/ppyurind/ai-data-flow.png)
+
+*Team-level data flow — 입력 방식별 전처리 이후 개인정보 보호, Safety, AI 분석·생성, 저장과 결과 제공으로 이어지는 전체 흐름을 보여줍니다.*
+
+이 전체 흐름 중 제가 PR·Commit으로 확인 가능한 주요 범위는 멀티모달 Backend 입력 경계, PII masking, Structured LLM response contract, Safety Policy, Legal RAG routing, taxonomy 및 저장 신뢰성 개선입니다. Frontend 전체, DB 전체 설계, 팀 인프라 전체를 개인 기여로 주장하지 않습니다.
 
 ## 핵심 기여 (My Contribution)
 

@@ -6,6 +6,8 @@
 
 현재 Backend 기록에서 siaSim이 MVP, media, emotion, safety, taxonomy, PII, routing, reliability 영역의 PR을 작성한 사실을 확인할 수 있습니다. 이 문서는 모든 Repository 변경을 AI 기여로 제시하지 않고, Case Study와 직접 연결되는 PR을 중심으로 정리합니다.
 
+- Team architecture/data-flow reference: 프로젝트 결과보고서의 팀 전체 설계 자료입니다. 전체 시스템 맥락 설명용이며 개인 구현 근거로 사용하지 않습니다.
+
 팀원이 작성한 초기 구현은 개인 기여와 구분했습니다. 특히 `my0614`의 PR #6·#8에는 초기 Azure OpenAI emotion analysis / Content Safety 연동이, PR #13에는 초기 Tone Conversion 구현이 포함되어 있습니다. Case Study에서는 siaSim이 작성한 후속 policy, contract, masking, routing, reliability 작업만 개인 기여로 표현합니다.
 
 ## 검증된 개인 기여 (Verified Contributions)
