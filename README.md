@@ -23,7 +23,7 @@ LLM Agent와 RAG를 Backend 시스템에 연결하고, Structured Output·Proven
 
 ### 2. PPYURIND — 감정·갈등 기록 분석
 
-**역할:** AI Backend / LLM Application · **기간:** 2026.06.29–2026.07.05 (siaSim PR 기록 기준) · **Team Project**
+**역할:** AI Backend / LLM Application · **기간:** 2026.06–2026.07 · **개인 GitHub 기여 기록:** 2026.06.29–2026.07.05 (siaSim PR 기록 기준) · **Team Project**
 
 - text / voice / image 입력을 STT·OCR과 PII Protection을 거쳐 Structured LLM Analysis로 연결하고, Azure AI 기반 Emotion Analysis·Tone Conversion 응답 계약을 확장했습니다.
 - Safety Policy·Content Safety를 적용하고, 일반 상담과 Legal RAG를 분리하는 RAG Chat Routing 및 법률 정보 범위를 구현했습니다.
@@ -33,7 +33,7 @@ LLM Agent와 RAG를 Backend 시스템에 연결하고, Structured Output·Proven
 
 ### 3. CellGuard AI — 배터리 검사 서비스
 
-**역할:** Team Lead / AI Service Integration / Computer Vision Application · **기간:** 2026.05 · **Team Project**
+**역할:** Team Lead / AI Service Integration / Computer Vision Application · **기간:** 2026.04–2026.05 · **개인 GitHub 기여 기록:** 2026.05.19–2026.05.20 (Commit 기준) · **Team Project**
 
 - Azure Custom Vision과 CT / DeepLab inference 결과를 검사 애플리케이션에 통합했습니다.
 - 검사 결과 저장·이력 필터·상세 리포트 흐름을 구현하고, GitHub Actions + Azure App Service 기반 Streamlit 프로토타입 배포·시연 흐름을 구성했습니다.

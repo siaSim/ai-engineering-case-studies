@@ -36,10 +36,6 @@ ForeShield는 기후재난 질문에 지역·재난 유형·시간 범위와 공
 
 아래 구성은 현재 검증 가능한 Backend 경계를 요약한 것입니다.
 
-> **Architecture placeholder**
->
-> 프로젝트 Architecture가 확정된 후 Architecture diagram을 추가할 예정입니다.
-
 ## 핵심 기여 (My Contribution)
 
 ### 1. Agent 기반 및 Context Interpretation (Agent Foundation & Context Interpretation)
@@ -75,7 +71,7 @@ RAG와 Context 안의 문장은 시스템 지시가 아닌 데이터로 처리�
 
 ## 서비스 동작 흐름 (Service Flow)
 
-최종 Architecture는 아직 확정되지 않았습니다. 아래 화면은 Agent/RAG/Backend 기능이 팀 UI에서 제공되는 방식을 보여주는 용도입니다.
+아래 화면은 현재 검증 가능한 Agent/RAG/Backend 기능이 팀 UI에서 제공되는 방식을 보여주는 용도입니다.
 
 ![ForeShield Agent 동작 흐름](../assets/foreshield/agent-flow.png)
 

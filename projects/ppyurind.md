@@ -1,6 +1,6 @@
 # PPYURIND — 감정·갈등 기록 분석
 
-**역할:** AI Backend / LLM Application · **기간:** 2026.06.29–2026.07.05 (siaSim PR 기록 기준) · **Team Project**
+**역할:** AI Backend / LLM Application · **기간:** 2026.06–2026.07 · **개인 GitHub 기여 기록:** 2026.06.29–2026.07.05 (siaSim PR 기록 기준) · **Team Project**
 
 > 이 Case Study는 팀 프로젝트 전체가 아닌, PR·Commit·Issue 등으로 확인 가능한 개인 기여를 중심으로 작성했습니다.
 >

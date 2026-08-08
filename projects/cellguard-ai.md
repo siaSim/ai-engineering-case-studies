@@ -1,6 +1,6 @@
 # CellGuard AI — Computer Vision 검사 서비스 연동
 
-**역할:** Team Lead / AI Service Integration / Computer Vision Application · **기간:** 2026.05 (세부 작업은 2026.05.19–2026.05.20 Commit 기준) · **Team Project**
+**역할:** Team Lead / AI Service Integration / Computer Vision Application · **기간:** 2026.04–2026.05 · **개인 GitHub 기여 기록:** 2026.05.19–2026.05.20 (Commit 기준) · **Team Project**
 
 > 이 Case Study는 팀 프로젝트 전체가 아닌, `siaSim`이 작성한 Commit과 실제 공개 코드에서 확인되는 구현 기여를 중심으로 작성했습니다. Team Lead 및 프로젝트 담당 영역은 최종 발표자료의 보조 근거로 구분해 기록합니다.
 
