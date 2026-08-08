@@ -134,9 +134,18 @@ PR과 Commit에서 확인 가능한 Backend 검증 결과는 다음과 같습니
 
 PR #28, #30, #31, #32에는 관련 테스트 파일과 검증 시나리오가 추가되어 있지만, 공개 PR 기록에서 일관된 전체 통과 수치가 확인되지 않는 항목은 숫자로 확대하지 않았습니다. PR #30 자체도 일부 검증 항목을 미완료로 표시하므로 완료된 LLM 평가로 표현하지 않습니다.
 
-### LLM 품질 평가 범위 (LLM Quality Evaluation Boundary)
+### LLM 품질 평가 (LLM Quality Evaluation)
 
-Repository에서 확인되는 것은 schema·routing·fallback·policy에 대한 소프트웨어 테스트입니다. 정확도, Recall, F1, PII masking 정확도, 사용자 수, latency 또는 별도 평가셋 기반 품질 향상 수치는 확인되지 않아 주장하지 않습니다.
+LLM 응답 품질을 소프트웨어 테스트와 별도 평가셋으로 구분해 확인하기 위해 평가셋을 구성했습니다.
+
+- **Responsible AI Hard Set:** 60건
+- **General Stability Set:** 120건
+- **총 평가 건수:** 180건
+- **평가 실행:** Python Eval Harness가 프로젝트 API endpoint에 평가 데이터를 자동 입력하고 결과를 채점
+
+General Stability Set에서는 120/120 요청이 HTTP 200을 반환했고, 응답 구조 안정성은 100%였습니다. Responsible AI Hard Set에서는 위험 Recall 33.3%, F1 37.5%를 측정했습니다. 낮은 위험 탐지 성능을 숨기지 않고, 해당 결과를 이후 개선 우선순위 도출에 사용했습니다.
+
+이 수치는 프로젝트 평가 결과이며, 공개 GitHub PR·Commit 기반 소프트웨어 테스트 결과와는 별도의 Evaluation Evidence로 구분합니다. 평가 원본 스크립트와 결과 파일은 이 공개 Repository에 포함하지 않습니다.
 
 ## 기여 근거 (Evidence)
 
