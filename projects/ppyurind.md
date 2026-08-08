@@ -10,11 +10,9 @@
 
 PPYURIND는 감정·갈등 기록을 분석하고, 대화 표현을 바꾸며, 일반 상담·법률 정보·안전 안내를 구분하는 AI Backend 프로젝트입니다. 저는 Azure OpenAI 응답 계약 확장, 개인정보 보호, Safety Policy, RAG routing과 법률 정보 범위, 라벨·저장 신뢰성 개선을 담당했습니다.
 
-> **이미지 placeholder — 프로젝트 개요 / 팀 서비스 UI**
->
-> 기존 프로젝트 캡처가 준비되면 이 위치에 대표 화면을 추가합니다. 화면은 팀 UI에서 Backend/AI 결과가 제공되는 방식을 보여주는 용도입니다.
->
-> *캡션: 서비스 UI — 팀 구현. 이 Case Study는 해당 흐름을 뒷받침하는 확인 가능한 AI/Backend 기여에 초점을 둡니다.*
+![PPYURIND 서비스 개요](../assets/ppyurind/overview.png)
+
+*서비스 UI — 팀 구현. 이 화면은 Backend/AI 결과와 text / voice / capture 입력 진입점이 팀 UI에서 제공되는 형태를 보여줍니다. 이 Case Study는 해당 흐름을 뒷받침하는 확인 가능한 AI/Backend 기여에 초점을 둡니다.*
 
 ## 문제와 목표 (Problem & Goal)
 
@@ -92,23 +90,17 @@ RAG 근거가 상대적으로 약한 불륜·도박·접근금지 같은 주제�
 
 아래 화면은 팀 UI에서 제 Backend/AI 결과가 사용자에게 나타나는 형태를 보여주는 용도로만 사용합니다. Frontend 전체 구현을 제 기여로 주장하지 않습니다.
 
-> **Image placeholder — Emotion Analysis / Structured Result**
->
-> 감정 기록 입력과 사실·해석·감정·균형 관점 결과가 함께 보이는 실제 캡처를 추후 추가합니다.
->
-> *캡션: 서비스 UI — 팀 구현. 이 Case Study는 해당 흐름을 뒷받침하는 확인 가능한 AI/Backend 기여에 초점을 둡니다.*
+![PPYURIND 감정 분석 결과](../assets/ppyurind/emotion-analysis.png)
 
-> **Image placeholder — Voice STT or OCR Multimodal Input**
->
-> 음성 STT 또는 이미지 OCR 결과가 분석 입력으로 이어지는 실제 캡처를 추후 추가합니다. 화면은 팀 UI에서 Media API와 privacy-safe analysis input이 제공되는 형태를 보여주는 용도입니다.
->
-> *캡션: 서비스 UI — 팀 구현. 이 Case Study는 해당 흐름을 뒷받침하는 확인 가능한 AI/Backend 기여에 초점을 둡니다.*
+*서비스 UI — 팀 구현. 이 화면은 Structured LLM Analysis 결과가 감정·갈등 원인·숨은 욕구·전달 제안 형태로 표시되는 지점을 보여줍니다. 이 Case Study는 해당 흐름을 뒷받침하는 확인 가능한 AI/Backend 기여에 초점을 둡니다.*
 
-> **Image placeholder — RAG Chat / Safety Routing**
->
-> 일반 상담, 법률 정보, 안전 안내가 구분되어 표시되는 실제 캡처를 추후 추가합니다.
->
-> *캡션: 서비스 UI — 팀 구현. 이 Case Study는 해당 흐름을 뒷받침하는 확인 가능한 AI/Backend 기여에 초점을 둡니다.*
+![PPYURIND 멀티모달 입력 화면](../assets/ppyurind/multimodal-input.png)
+
+*서비스 UI — 팀 구현. 이 화면은 text / voice / capture 입력 경계와 음성 기록 진입점을 보여주며, 실제 STT 변환 결과 화면을 의미하지 않습니다. 이 Case Study는 해당 흐름을 뒷받침하는 확인 가능한 AI/Backend 기여에 초점을 둡니다.*
+
+![PPYURIND RAG Chat 및 법률 Routing](../assets/ppyurind/rag-chat.png)
+
+*서비스 UI — 팀 구현. 이 화면은 일반 관계 고민에서 법률 질문으로 전환되는 흐름과 Legal RAG routing이 사용자 응답에 나타나는 지점을 보여줍니다. 이 Case Study는 해당 흐름을 뒷받침하는 확인 가능한 AI/Backend 기여에 초점을 둡니다.*
 
 ## 신뢰성 및 안전 설계 (Reliability & Safety)
 
