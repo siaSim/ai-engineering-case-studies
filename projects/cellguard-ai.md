@@ -1,14 +1,16 @@
 # CellGuard AI — Computer Vision 검사 서비스 연동
 
-**역할:** AI Service Integration / Computer Vision Application · **기간:** 2026.05 (세부 작업은 2026.05.19–2026.05.20 Commit 기준) · **Team Project**
+**역할:** Team Lead / AI Service Integration / Computer Vision Application · **기간:** 2026.05 (세부 작업은 2026.05.19–2026.05.20 Commit 기준) · **Team Project**
 
-> 이 Case Study는 팀 프로젝트 전체가 아닌, `siaSim`이 작성한 Commit과 실제 공개 코드에서 확인되는 기여를 중심으로 작성했습니다.
+> 이 Case Study는 팀 프로젝트 전체가 아닌, `siaSim`이 작성한 Commit과 실제 공개 코드에서 확인되는 구현 기여를 중심으로 작성했습니다. Team Lead 및 프로젝트 담당 영역은 최종 발표자료의 보조 근거로 구분해 기록합니다.
 
 ## 프로젝트 개요 (Overview)
 
 CellGuard AI는 이차전지 외관 이미지와 CT 이미지를 검사하고, 판정 결과를 검사 이력·리포트 화면으로 연결하는 품질검사 지원 프로젝트입니다. 저는 Computer Vision 모델 자체의 학습 성과를 주장하기보다, 외부 추론 서비스와 CT inference 결과를 검사 애플리케이션·저장·리포트·배포 흐름에 연결하는 작업을 담당했습니다.
 
-<!-- Image placeholder: `assets/cellguard/overview.png` — 서비스 또는 검사 대표 화면을 추후 추가합니다. -->
+![CellGuard AI 외관검사 서비스 화면](../assets/cellguard/exterior-inspection.png)
+
+*CellGuard 외관검사 UI — 팀 프로젝트 화면. 제 검증 가능한 기여에는 Azure Custom Vision 연동, 검사 결과 연결, Streamlit 서비스 통합이 포함됩니다.*
 
 ## 문제와 목표 (Problem & Goal)
 
@@ -56,11 +58,12 @@ CT 검사에서는 DeepLab MobileNet 구조와 `predict_one_image` inference 흐
 
 ### 3. 배포 워크플로우 (Deployment Workflow)
 
-Azure App Service 배포를 위해 GitHub Actions workflow에 Python 환경 구성, 의존성 설치, artifact 업로드, Azure 로그인, Web App deploy 단계를 추가했습니다. 이 근거는 배포 workflow 정의와 연결을 보여주며, 이 문서에서는 실제 운영 배포 성공이나 가동률을 주장하지 않습니다. [Commit 80dc8e9](https://github.com/ms-ai-school-10th-team3/battery/commit/80dc8e98146e6fa03c69b4c350f06e59271c0ecf) · [Commit ec75de7](https://github.com/ms-ai-school-10th-team3/battery/commit/ec75de701bb670b82efad2864f5b1633f038164b)
+Azure App Service 배포를 위해 GitHub Actions workflow에 Python 환경 구성, 의존성 설치, artifact 업로드, Azure 로그인, Web App deploy 단계를 추가했습니다. 최종 발표자료에는 Azure-Streamlit end-to-end 연동 성공 기록과 당시 시연 화면이 남아 있어, GitHub workflow와 함께 Azure App Service 기반 Streamlit 프로토타입 배포·시연 수준을 확인할 수 있습니다. 이는 production 운영, 실제 사용자 트래픽, SLA, 장기 가동률을 의미하지 않습니다. [Commit 80dc8e9](https://github.com/ms-ai-school-10th-team3/battery/commit/80dc8e98146e6fa03c69b4c350f06e59271c0ecf) · [Commit ec75de7](https://github.com/ms-ai-school-10th-team3/battery/commit/ec75de701bb670b82efad2864f5b1633f038164b)
 
 ## 기술적 의사결정 (Technical Decisions)
 
 - **추론 경계 분리:** 외관은 Azure Custom Vision API, CT는 로컬 inference pipeline으로 분리해 각 결과 계약을 명확히 했습니다.
+- **모델 선택과 서비스 연동:** 프로젝트의 Classification baseline 및 Detection/Segmentation 후보를 비교한 뒤, 최종 MVP에서는 서비스 연동 가능성·결과 해석·일정과 검사 영역별 역할 분리를 고려해 외관은 Custom Vision Object Detection, CT는 MobileNet + DeepLab 경계로 구성했습니다. 상세 성능 수치는 개인 성과로 사용하지 않습니다.
 - **설정과 코드 분리:** Custom Vision endpoint와 key는 코드에 고정하지 않고 환경 변수 또는 Streamlit secret에서 읽도록 구성했습니다.
 - **결과 중심 저장:** 모델 내부 출력 전체를 그대로 노출하기보다 화면·리포트에 필요한 판정, 위험도, 신뢰도, 결함 요약, 시각화 경로를 공통 저장 필드로 정리했습니다.
 - **Azure 파일시스템 고려:** 보고서 저장 경로를 별도 storage helper로 분리하고 Azure App Service의 `/home` 기반 저장 경계를 고려했습니다.
@@ -70,11 +73,15 @@ Azure App Service 배포를 위해 GitHub Actions workflow에 Python 환경 구�
 
 아래 placeholder는 팀 UI에서 Computer Vision 결과가 사용자에게 나타나는 위치를 설명하기 위한 것입니다. Frontend 전체 구현을 개인 기여로 주장하지 않습니다.
 
-<!-- Image placeholder: `assets/cellguard/overview.png` — 서비스 또는 검사 대표 화면 -->
+![CellGuard AI CT 검사 화면](../assets/cellguard/ct-inspection.png)
 
-<!-- Image placeholder: `assets/cellguard/inspection-result.png` — 외관/CT 검사 결과와 결함 판정 화면 -->
+*CellGuard CT 검사 UI — 팀 프로젝트 화면. DeepLab 기반 inference 결과가 검사 판정·시각화·저장 흐름으로 연결되는 모습을 보여주며, Frontend 전체 구현을 의미하지 않습니다.*
 
-<!-- Image placeholder: `assets/cellguard/report-history.png` — 검사 리포트·이력·필터 화면 -->
+![CellGuard AI 검사 리포트 화면](../assets/cellguard/report-history.png)
+
+*Inspection Report UI — 팀 프로젝트 화면. 제 검증 가능한 기여에는 검사 결과 저장, 이력 필터링, 상세 리포트 흐름이 포함됩니다.*
+
+> 화면의 건수·confidence·risk 값은 당시 데모 UI에 표시된 값이며, 모델 성능이나 운영 지표로 해석하지 않습니다.
 
 ## 검증 결과 (Result & Validation)
 
@@ -83,9 +90,9 @@ Azure App Service 배포를 위해 GitHub Actions workflow에 Python 환경 구�
 - Custom Vision 호출은 비정상 HTTP status와 빈 응답을 예외로 처리하고, 필요한 설정이 없으면 명시적인 오류를 반환합니다.
 - CT inference는 모델 weight 누락을 확인하고, `state_dict`를 로드한 뒤 `eval` 모드에서 예측·mask·overlay·JSON 결과를 생성합니다.
 - 외관·CT 결과는 공통 `reports.csv` 저장 계약에 연결되며, 리포트 화면에서 필터·상세 조회·다운로드 흐름으로 이어집니다.
-- Azure App Service workflow에는 build와 deploy job, Python 의존성 설치, artifact 전달 단계가 기록되어 있습니다.
+- Azure App Service workflow에는 build와 deploy job, Python 의존성 설치, artifact 전달 단계가 기록되어 있습니다. 발표자료의 Azure-Streamlit end-to-end 연동 기록과 시연 화면을 보조 근거로 함께 확인할 수 있지만, production 운영이나 장기 안정성은 주장하지 않습니다.
 
-이는 코드 경로와 Commit에서 확인되는 동작 범위입니다. Accuracy, mIoU, F1, latency, 사용자 수, 실제 배포 성공 여부는 별도 검증 자료가 없어 주장하지 않습니다.
+이는 코드 경로·Commit과 보조 발표자료에서 확인되는 범위입니다. Accuracy, mIoU, F1, latency, 사용자 수, production 운영·SLA·가동률은 주장하지 않습니다.
 
 ## 기여 근거 (Evidence)
 

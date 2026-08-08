@@ -13,6 +13,14 @@
 - [Report detail UI](https://github.com/ms-ai-school-10th-team3/battery/blob/main/pages/report.py)
 - [Azure App Service workflow](https://github.com/ms-ai-school-10th-team3/battery/blob/main/.github/workflows/main_battery-main.yml)
 
+## 보조 프로젝트 근거 (Supplemental Project Evidence)
+
+- **Final presentation:** 최종 발표자료의 팀 소개 슬라이드에서 `팀장 심시아`와 담당 영역(Classification 모델, 모델 통합, 모델 평가, Streamlit UI, Azure 배포, 일정 관리·역할 분배)을 확인했습니다. 이는 Team Lead 및 프로젝트 역할에 대한 보조 근거이며, 모든 모델·Frontend·Architecture를 혼자 구현했다는 근거가 아닙니다.
+- **Prototype demonstration:** 같은 발표자료에 Azure-Streamlit end-to-end 연동 성공 기록과 당시 서비스 시연 화면이 포함되어 있어, GitHub Actions workflow와 함께 Azure App Service 기반 Streamlit 프로토타입 배포·시연 수준을 보조합니다. Production 운영·실제 사용자 트래픽·SLA·장기 가동률의 근거로 사용하지 않습니다.
+- **Project Wiki:** `03-Model-Experiments`, `05-1-Classification-Model-Comparison`, `04-Final-Model-Selection` 기록에서 MobileNetV2·ResNet18 Classification baseline과 Detection/Segmentation 후보 비교, 최종 MVP의 외관 `Custom Vision Object Detection`·CT `MobileNet + DeepLab` 선택 기준을 확인했습니다. 이는 팀 프로젝트의 모델 선택 기록이며, 개인 단독 학습·모델 평가 성과의 직접 Evidence로 취급하지 않습니다.
+
+발표자료·Wiki 원본은 Google Drive에서 검토했지만 Portfolio Repository에 복사하거나 재배포하지 않았습니다. 발표자료에 포함된 팀 전체 성능 수치도 개인 기여의 직접 Evidence로 사용하지 않습니다.
+
 ## 검증된 개인 기여 (Verified Contributions)
 
 | 기능 | 개인 기여 | Commit / PR | 근거 수준 |
@@ -33,10 +41,10 @@
 
 ## 기여 범위 및 상태 (Boundary and Status Notes)
 
-- `siaSim/siaSim` 프로필 README에는 CellGuard를 “팀장”으로 표기한 Commit이 확인되지만, 이는 프로필 자기기술이며 팀 Repository의 역할 배정·Project 기록으로 독립 검증된 자료는 아닙니다. 따라서 이 Case Study의 역할에는 팀장을 사용하지 않았습니다.
+- Team Lead 표기는 최종 발표자료의 팀 소개 슬라이드라는 보조 근거로 추가했습니다. 이는 일정 관리·역할 분배와 프로젝트 책임 범위를 설명하지만, 모든 모델 학습·Frontend·Architecture를 혼자 구현했다는 의미는 아닙니다. 개인 구현 주장은 아래 GitHub authored Commit을 기준으로 제한합니다.
 - Repository README와 팀 전체 파일에는 CNN, PyTorch, Azure ML, 모델 평가 지표, 향후 기능 등 전체 프로젝트 범위가 설명되어 있지만, 개인 authored Commit으로 확인되지 않는 모델 학습·성능 비교·수상·전체 기술 리딩은 개인 기여로 집계하지 않았습니다.
 - `af8fcf8`에서 DeepLab 구조와 inference code가 추가된 것은 확인되지만, 학습을 제가 주도했다거나 README에 포함된 mIoU 수치를 달성했다는 근거로 사용하지 않았습니다.
-- Azure App Service workflow Commit은 workflow 정의를 증명하지만, 이 Portfolio에서 실제 배포 성공·운영 지속성·가동률을 재검증한 근거는 아닙니다.
+- Azure App Service workflow Commit과 최종 발표자료의 시연 기록을 종합해 프로토타입 배포·시연 수준까지 기록했습니다. Production 운영·운영 지속성·가동률은 주장하지 않습니다.
 
 ## 검증 요약 (Validation Summary)
 
@@ -46,7 +54,8 @@
 | CT inference output | 모델 weight 로드, `eval` 추론, mask·overlay·JSON 결과 생성 코드 | 정확도·mIoU·F1 수치는 주장하지 않음 |
 | Result persistence | 외관·CT 결과를 공통 CSV 저장 helper와 report fields에 연결 | 운영 DB 안정성이나 동시성 검증은 확인하지 않음 |
 | Report UI | 날짜·라인·검사 유형·판정·Battery ID 필터와 상세 페이지 이동 코드 | 사용자 규모·latency·사용성 지표는 확인하지 않음 |
-| Deployment workflow | GitHub Actions YAML에 build/deploy job과 Azure Web App action 기록 | 실제 배포 성공 여부는 별도 확인하지 않음 |
+| Model selection documentation | Classification baseline 및 Detection/Segmentation 후보 비교와 최종 MVP 모델 선택 기록 | 팀 프로젝트 문서이며 개인 단독 학습·성능 수치의 직접 Evidence로 사용하지 않음 |
+| Prototype deployment/demo | GitHub Actions workflow와 발표자료의 Azure-Streamlit end-to-end 연동·시연 기록 | production 운영·실제 사용자 트래픽·SLA·가동률은 확인하지 않음 |
 
 ## 공개 범위 원칙 (Publication Policy)
 
