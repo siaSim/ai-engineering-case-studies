@@ -10,8 +10,6 @@ CellGuard AI는 이차전지 외관 이미지와 CT 이미지를 검사하고, �
 
 <!-- Image placeholder: `assets/cellguard/overview.png` — 서비스 또는 검사 대표 화면을 추후 추가합니다. -->
 
-*서비스 UI — 팀 구현. 이 Case Study는 이 흐름 뒤의 확인 가능한 AI Service Integration·Computer Vision Application 기여에 초점을 둡니다.*
-
 ## 문제와 목표 (Problem & Goal)
 
 검사 모델의 결과가 이미지 분석 단계에만 머물면 검수자가 판정 결과를 확인하거나 이전 검사와 비교하기 어렵습니다. 외관검사와 CT 검사는 서로 다른 추론 경계를 사용하지만, 사용자에게는 하나의 검사 서비스로 제공되어야 했습니다.
@@ -74,15 +72,9 @@ Azure App Service 배포를 위해 GitHub Actions workflow에 Python 환경 구�
 
 <!-- Image placeholder: `assets/cellguard/overview.png` — 서비스 또는 검사 대표 화면 -->
 
-*서비스 UI — 팀 구현. 이 화면은 검사 서비스에서 확인 가능한 Computer Vision 연동 기여가 사용자 경험으로 나타나는 위치를 보여줍니다.*
-
 <!-- Image placeholder: `assets/cellguard/inspection-result.png` — 외관/CT 검사 결과와 결함 판정 화면 -->
 
-*서비스 UI — 팀 구현. 이 화면은 Custom Vision 또는 CT inference 결과가 사용자에게 표시되는 위치를 보여주며, Frontend 전체 구현을 의미하지 않습니다.*
-
 <!-- Image placeholder: `assets/cellguard/report-history.png` — 검사 리포트·이력·필터 화면 -->
-
-*서비스 UI — 팀 구현. 이 화면은 이 Case Study에서 설명한 검사 결과 저장·필터·상세 조회 흐름을 보여주는 용도로 사용합니다.*
 
 ## 검증 결과 (Result & Validation)
 
