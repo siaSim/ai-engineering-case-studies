@@ -71,7 +71,7 @@
 | Report boundary tests | Commit `1a4c1c5`: 69 passed | Commit에 기록된 결과 |
 | PII masking tests | PR #28에 테스트가 추가되었고 Azure 호출은 mock 처리 | PII precision/recall 또는 masking accuracy 지표는 확인되지 않음 |
 | RAG routing / legal scope | PR #31/#32에 routing 및 주제별 테스트 시나리오 추가 | 답변 품질 benchmark 또는 법률 정확성 지표는 확인되지 않음 |
-| LLM evaluation | 확인한 기록에서 공개 evaluation dataset, accuracy, Recall, F1, latency, user metric을 찾지 못함 | 주장하지 않음 |
+| LLM evaluation | Supplemental Evaluation Evidence에 Responsible AI Hard Set 60건·General Stability Set 120건과 측정 결과를 별도 기록 | 평가 원본은 이 공개 Repository에 포함하지 않으며, GitHub PR·Commit으로 확인한 수치처럼 표현하지 않음 |
 
 ## 공개 범위 원칙 (Publication Policy)
 
