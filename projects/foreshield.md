@@ -27,7 +27,7 @@ ForeShield는 기후재난 질문에 지역·재난 유형·시간 범위와 공
 
 ## 시스템 구조 (Architecture)
 
-최종 서비스 Architecture는 아직 확정되지 않았습니다. 현재 코드와 PR에서 확인되는 논리적 구성은 다음과 같습니다.
+현재 코드와 PR에서 검증 가능한 Backend 논리 구조는 다음과 같습니다.
 
 - **Contract layer:** AgentRunRequest, AgentPlan, Agent Event가 입력·계획·실행 결과의 경계를 정의합니다.
 - **Decision layer:** Context Interpretation과 Intent-based Tool Router가 필수 입력, clarification, Tool 정책을 결정합니다.
