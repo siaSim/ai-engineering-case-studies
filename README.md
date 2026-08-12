@@ -56,7 +56,7 @@ GitHub Actions, Azure App Service
 
 ## 근거 및 공개 범위 (Evidence & Scope)
 
-PR·Commit·Issue·코드 경로·테스트로 확인 가능한 개인 기여만 기록하며, 확인되지 않은 정확도·성능·사용자 수 등의 정량 수치는 사용하지 않습니다. Private source code, 내부 Prompt·API 계약, Secret, Azure Resource·Endpoint, RAG Corpus, 팀 내부 데이터는 포함하지 않습니다. Private 원본의 PR·코드 링크는 외부 채용 담당자에게 보이지 않을 수 있습니다.
+PR·Commit·Issue·코드 경로·테스트로 확인 가능한 개인 기여와 별도 프로젝트 평가 결과를 구분해 기록하며, 확인되지 않은 정확도·성능·사용자 수 등의 정량 수치는 사용하지 않습니다. Private source code, 내부 Prompt·API 계약, Secret, Azure Resource·Endpoint, RAG Corpus, 팀 내부 데이터는 포함하지 않습니다. Private 원본의 PR·코드 링크는 외부 채용 담당자에게 보이지 않을 수 있습니다.
 
 ## GitHub / 연락처 (Contact)
 
